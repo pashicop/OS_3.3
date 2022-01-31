@@ -1,9 +1,16 @@
 # OS_3.3
 # 1
-```
-vagrant@vagrant:~$ strace /bin/bash -c cd t1 2>&1 | grep cd
-execve("/bin/bash", ["/bin/bash", "-c", "cd", "t1"], 0x7ffe0819f198 /* 24 vars */) = 0
-```
+**UPDATE:**  
+`cd` делает системный вызов `chdir("/tmp")`  
+> vagrant@vagrant:~$ strace /bin/bash -c 'cd /tmp' 2>&1|grep tmp    
+    execve("/bin/bash", ["/bin/bash", "-c", "cd /tmp"], 0x7fffe4e41690 /* 24 vars */) = 0  
+    stat("/tmp", {st_mode=S_IFDIR|S_ISVTX|0777, st_size=4096, ...}) = 0  
+   **chdir("/tmp")                           = 0**  
+   
+**OLD:**  
+<s>vagrant@vagrant:~$ strace /bin/bash -c cd t1 2>&1 | grep cd   
+execve("/bin/bash", ["/bin/bash", "-c", "cd", "t1"], 0x7ffe0819f198 /* 24 vars */) = 0</s>
+
 # 2
 Файл `/etc/magic`
 ```
